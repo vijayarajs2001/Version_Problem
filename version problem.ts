@@ -1,14 +1,20 @@
+// let ref:(string|number) = 23
+// ref='hello'
+// console.log(ref)
 interface IAndroidVersion {
     version: string,
     releaseDate: Date,
     features: string[],
     bugID: string[],
     author: string[],
-    type: string
+    releaseType: EReleaseType
 }
 interface IBugList{
     bugID:string
     description:string
+}
+enum EReleaseType{
+    Major,Enhancement,Patch
 }
 const androidVersion = [
     {
@@ -17,7 +23,7 @@ const androidVersion = [
         features: ["67A", "87Z"],
         bugID: ["bugid#436"],
         author: ["Google", "Android"],
-        type: "Enhancement"
+        releaseType: EReleaseType.Enhancement
     },
     {
         version: "6 Marshmallow",
@@ -25,7 +31,7 @@ const androidVersion = [
         features: ["67A", "76K"],
         bugID: ["bugid#305"],
         author: ["Google", "TestRIG"],
-        type: "Major"
+        releaseType: EReleaseType.Major
     },
     {
         version: "7 Nougat",
@@ -33,7 +39,7 @@ const androidVersion = [
         features: ["91A", "55B"],
         bugID: ["bugid#315"],
         author: ["Google", "snapdragon"],
-        type: "Patch"
+        releaseType: EReleaseType.Patch
     },
     {
         version: "7.1 Nougat)",
@@ -41,7 +47,7 @@ const androidVersion = [
         features: ["56A", "34A"],
         bugID: ["bugid#325"],
         author: ["Android", "Google"],
-        type: "Enhancement"
+        releaseType: EReleaseType.Enhancement
     },
     {
         version: "8 Oreo",
@@ -49,7 +55,7 @@ const androidVersion = [
         features: ["45G", "45J"],
         bugID: ["bugid#335"],
         author: ["Android"],
-        type: "Patch"
+        releaseType: EReleaseType.Patch
     },
     {
         version: "8.1 oreo",
@@ -57,7 +63,7 @@ const androidVersion = [
         features: ["76G", "54H"],
         bugID: ["bugid#345"],
         author: ["TestRIG", "Android"],
-        type: "Enhancement"
+        releaseType: EReleaseType.Enhancement
     },
     {
         version: "9  pie",
@@ -65,7 +71,7 @@ const androidVersion = [
         features: ["1X", "66T"],
         bugID: ["bugid#375"],
         author: ["Angular", "TestRIG"],
-        type: "Major"
+        releaseType: EReleaseType.Major
     },
     {
         version: "10",
@@ -73,7 +79,7 @@ const androidVersion = [
         features: ["45H", "54H"],
         bugID: ["bugid#395"],
         author: ["Angular", "Google"],
-        type: "Major"
+        releaseType: EReleaseType.Major
     },
     {
         version: "11",
@@ -81,7 +87,7 @@ const androidVersion = [
         features: ["7Z", "48X"],
         bugID: ["bugid#405"],
         author: ["snapdragon", "TestRIG"],
-        type: "Major"
+        releaseType: EReleaseType.Major
     },
     {
         version: "12",
@@ -89,7 +95,7 @@ const androidVersion = [
         features: ["99Z", "7Z"],
         bugID: ["bugid#436"],
         author: ["unknown5", "snapdragon"],
-        type: "Enhancement"
+        releaseType: EReleaseType.Enhancement
     },
 ]
 const bugList = [{
@@ -134,7 +140,7 @@ const bugList = [{
 }
 ]
 // -----------------------------------------------------------------------------------------------------------------------------------
-function releaseCountInYear(year: any) {
+function releaseCountInYear(year: string) {
     let yearVariable = androidVersion.filter(n => n.releaseDate.toString().includes(year))
     console.log(`The number of updates on (${year}) : ${yearVariable.length}`)
     console.log(yearVariable)
@@ -178,9 +184,9 @@ function highestUpdatesByAuthor() {
     console.log(`"The author named (${authorName}) released more number of version and the count is ${counter}"`)
 }
 // -----------------------------------------------------------------------------------------------------------------------------------
-function typesOfUpdateSearch(str: string) {
-    let typeVariable = androidVersion.filter(n => n.type.includes(str))
-    console.log(`Total versions having ${str} type releases : ${typeVariable.length} `)
+function typesOfUpdateSearch(str: EReleaseType) {
+    let typeVariable = androidVersion.filter(n => n.releaseType==(str))
+    console.log(`Total versions having ${EReleaseType[str]} type releases : ${typeVariable.length} `)
     console.log(typeVariable)
 }
 // -----------------------------------------------------------------------------------------------------------------------------------
@@ -191,7 +197,7 @@ function featuresKeyWordSearch(str: string) {
 }
 // -----------------------------------------------------------------------------------------------------------------------------------
 console.log("Q.1.How many releases were made in year?")
-console.log("ANS :"), releaseCountInYear(2017)
+console.log("ANS :"), releaseCountInYear("2017")
 // -----------------------------------------------------------------------------------------------------------------------------------
 console.log("Q.2.In which release specific bugID is present?")
 console.log("ANS :"), bugIDInputUpdateFinder("bugid#436")
@@ -200,7 +206,7 @@ console.log("Q.3.Which author has worked in many releases?")
 console.log("ANS :"), highestUpdatesByAuthor()
 // -----------------------------------------------------------------------------------------------------------------------------------
 console.log("Q.4.How many releases were type of major?")
-console.log("ANS :"), typesOfUpdateSearch("Major")
+console.log("ANS :"), typesOfUpdateSearch(EReleaseType.Major)
 // -----------------------------------------------------------------------------------------------------------------------------------
 console.log("Q.5.How many releases have the specific feature name?")
 console.log("ANS :"), featuresKeyWordSearch("67A")
