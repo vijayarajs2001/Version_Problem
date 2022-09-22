@@ -1,6 +1,3 @@
-// let ref:(string|number) = 23
-// ref='hello'
-// console.log(ref)
 interface IAndroidVersion {
     version: string,
     releaseDate: Date,
